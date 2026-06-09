@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tamanitamayoga-svg.github.io/tamanitama-yoga/sitemap.xml
