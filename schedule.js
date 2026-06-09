@@ -8,7 +8,7 @@ window.TAMANITAMA_SCHEDULE = {
 };
 
 (function () {
-  const iconSrc = "brand-icon.svg?v=20260609-2";
+  const iconSrc = "brand-icon.svg?v=20260609-3";
 
   function addBrandIcon() {
     const brand = document.querySelector(".brand");
