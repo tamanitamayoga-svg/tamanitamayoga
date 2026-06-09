@@ -7,10 +7,10 @@ window.TAMANITAMA_SCHEDULE = {
   year: 2026,
 
   // 表示したい月。7月なら 7、8月なら 8 と入力します。
-  month: 6,
+  month: 7,
 
   // 月の横に出す和名。不要な場合は "" にします。
-  monthName: "水無月",
+  monthName: "文月",
 
   // カレンダー上部に表示するOPEN時間
   openHours: "OPEN時間 08:00-20:00（水のみ 08:00-18:00）",
