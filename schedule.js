@@ -1,5 +1,5 @@
 // Schedule settings and top-left brand icon.
-const schedules = [
+const publishedSchedules = [
   {
     year: 2026,
     month: 6,
@@ -16,6 +16,61 @@ const schedules = [
     openDays: [1, 3, 4, 8, 10, 12, 13, 15, 16, 18, 19, 20, 21, 22, 27, 28, 29, 30],
   },
 ];
+
+const monthNames = [
+  "",
+  "\u7766\u6708",
+  "\u5982\u6708",
+  "\u5f25\u751f",
+  "\u536f\u6708",
+  "\u7690\u6708",
+  "\u6c34\u7121\u6708",
+  "\u6587\u6708",
+  "\u8449\u6708",
+  "\u9577\u6708",
+  "\u795e\u7121\u6708",
+  "\u971c\u6708",
+  "\u5e2b\u8d70",
+];
+
+function daysInMonth(year, month) {
+  return new Date(year, month, 0).getDate();
+}
+
+function addMonths(year, month, offset) {
+  const date = new Date(year, month - 1 + offset, 1);
+  return { year: date.getFullYear(), month: date.getMonth() + 1 };
+}
+
+function scheduleFor(year, month, status) {
+  const schedule = publishedSchedules.find((item) => item.year === year && item.month === month);
+  if (schedule) return schedule;
+
+  return {
+    year,
+    month,
+    monthName: monthNames[month] || "",
+    openHours: "",
+    openDays: [],
+    status: status || "",
+  };
+}
+
+function visibleSchedules(today) {
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1;
+  const isLastDay = today.getDate() === daysInMonth(year, month);
+  const startOffset = isLastDay ? 1 : 0;
+  const first = addMonths(year, month, startOffset);
+  const second = addMonths(year, month, startOffset + 1);
+
+  return [
+    scheduleFor(first.year, first.month),
+    scheduleFor(second.year, second.month, "\u30b9\u30b1\u30b8\u30e5\u30fc\u30eb\u8abf\u6574\u4e2d"),
+  ];
+}
+
+const schedules = visibleSchedules(new Date());
 
 window.TAMANITAMA_SCHEDULES = schedules;
 window.TAMANITAMA_SCHEDULE = schedules[0];
@@ -51,13 +106,22 @@ window.TAMANITAMA_SCHEDULE = schedules[0];
         object-fit: cover;
         box-shadow: 0 4px 16px rgba(47, 28, 16, 0.22);
       }
+      .calendar-card {
+        box-sizing: border-box;
+      }
       .calendar-card + .calendar-card {
         margin-top: 24px;
       }
-      .calendar-extra-title {
-        margin: 0 0 22px;
-        color: var(--leaf-dark);
-        font-size: clamp(22px, 3vw, 34px);
+      .calendar-grid {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        width: 100%;
+      }
+      .calendar-grid span {
+        min-width: 0;
+      }
+      .calendar-status {
+        margin: -6px 0 22px;
+        color: #bd2d2d;
         font-weight: 900;
         text-align: center;
       }
@@ -66,12 +130,32 @@ window.TAMANITAMA_SCHEDULE = schedules[0];
           width: 38px;
           height: 38px;
         }
+        .calendar-card {
+          overflow: hidden;
+        }
         .calendar-card + .calendar-card {
           margin-top: 16px;
+        }
+        .calendar-grid {
+          gap: 4px;
+        }
+        .calendar-grid span {
+          font-size: 19px;
+        }
+        .calendar-grid .day-name {
+          font-size: 13px;
         }
       }
     `;
     document.head.appendChild(style);
+  }
+
+  function updateSectionCopy() {
+    const title = document.getElementById("calendar-title");
+    const hours = document.getElementById("calendar-hours");
+
+    if (title) title.textContent = "OPEN\u65e5";
+    if (hours) hours.remove();
   }
 
   function renderCalendar(grid, schedule) {
@@ -111,11 +195,6 @@ window.TAMANITAMA_SCHEDULE = schedules[0];
     const card = document.createElement("div");
     card.className = "calendar-card";
 
-    const title = document.createElement("p");
-    title.className = "calendar-extra-title";
-    title.textContent = `${schedule.month}\u6708\u306eOPEN\u65e5`;
-    card.appendChild(title);
-
     const head = document.createElement("div");
     head.className = "calendar-head";
 
@@ -129,10 +208,12 @@ window.TAMANITAMA_SCHEDULE = schedules[0];
     head.append(yearEl, monthEl, monthNameEl);
     card.appendChild(head);
 
-    const hours = document.createElement("p");
-    hours.className = "calendar-note";
-    hours.textContent = schedule.openHours || "";
-    card.appendChild(hours);
+    if (schedule.status) {
+      const status = document.createElement("p");
+      status.className = "calendar-status";
+      status.textContent = schedule.status;
+      card.appendChild(status);
+    }
 
     const grid = document.createElement("div");
     grid.className = "calendar-grid";
@@ -140,6 +221,31 @@ window.TAMANITAMA_SCHEDULE = schedules[0];
 
     renderCalendar(grid, schedule);
     return card;
+  }
+
+  function syncBaseCalendar() {
+    const baseCard = document.querySelector("#open-days .calendar-card");
+    const baseGrid = document.getElementById("calendar-grid");
+    const baseSchedule = schedules[0];
+    if (!baseCard || !baseGrid || !baseSchedule) return;
+
+    const yearEl = document.getElementById("calendar-year");
+    const monthEl = document.getElementById("calendar-month");
+    const monthNameEl = document.getElementById("calendar-month-name");
+
+    if (yearEl) yearEl.textContent = baseSchedule.year;
+    if (monthEl) monthEl.textContent = baseSchedule.month;
+    if (monthNameEl) monthNameEl.textContent = baseSchedule.monthName || "";
+    baseCard.querySelector(".calendar-status")?.remove();
+
+    if (baseSchedule.status) {
+      const status = document.createElement("p");
+      status.className = "calendar-status";
+      status.textContent = baseSchedule.status;
+      baseGrid.before(status);
+    }
+
+    renderCalendar(baseGrid, baseSchedule);
   }
 
   function addAdditionalCalendars() {
@@ -158,10 +264,14 @@ window.TAMANITAMA_SCHEDULE = schedules[0];
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
       addBrandIcon();
+      updateSectionCopy();
+      syncBaseCalendar();
       addAdditionalCalendars();
     }, { once: true });
   } else {
     addBrandIcon();
+    updateSectionCopy();
+    syncBaseCalendar();
     addAdditionalCalendars();
   }
 })();
