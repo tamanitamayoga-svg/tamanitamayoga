@@ -11,9 +11,9 @@ const schedules = [
     year: 2026,
     month: 7,
     monthName: "\u6587\u6708",
-    openHours: "OPEN\u6642\u9593 \u8abf\u6574\u4e2d",
-    // Add July open days here when the schedule is ready, for example: [1, 5, 12]
-    openDays: [],
+    openHours: "OPEN\u6642\u9593 08:00-20:00\uff08\u6c34\u306e\u307f 08:00-18:00\uff09",
+    // Edit July open days here when changes are needed.
+    openDays: [1, 3, 4, 8, 10, 12, 13, 15, 16, 18, 19, 20, 21, 22, 27, 28, 29, 30],
   },
 ];
 
