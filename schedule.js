@@ -13,7 +13,7 @@ const publishedSchedules = [
     monthName: "\u6587\u6708",
     openHours: "OPEN\u6642\u9593 08:00-20:00\uff08\u6c34\u306e\u307f 08:00-18:00\uff09",
     // Edit July open days here when changes are needed.
-    openDays: [1, 3, 4, 8, 10, 12, 13, 15, 16, 18, 19, 20, 21, 22, 27, 28, 29, 30],
+    openDays: [1, 3, 4, 8, 10, 12, 13, 15, 16, 18, 19, 20, 22, 27, 28, 29, 30],
   },
 ];
 
@@ -155,7 +155,7 @@ window.TAMANITAMA_SCHEDULE = schedules[0];
     const hours = document.getElementById("calendar-hours");
 
     if (title) title.textContent = "OPEN\u65e5";
-    if (hours) hours.remove();
+    if (hours) hours.textContent = "OPEN\u6642\u9593 08:00-20:00\uff08\u6c34\u306e\u307f 08:00-18:00\uff09";
   }
 
   function renderCalendar(grid, schedule) {
