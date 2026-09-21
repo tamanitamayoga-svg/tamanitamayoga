@@ -212,6 +212,7 @@ window.TAMANITAMA_SCHEDULE = schedules[0];
       const classes = [];
       if (openDays.has(day)) classes.push("open");
       if (weekday === 0) classes.push("sun");
+      if ((year > 2026 || (year === 2026 && month >= 10)) && weekday === 6) classes.push("holiday");
       if (month === 10 && (day === 11 || day === 12)) classes.push("holiday");
       if (classes.length) el.className = classes.join(" ");
       el.textContent = day;
