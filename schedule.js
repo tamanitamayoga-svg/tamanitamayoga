@@ -31,6 +31,14 @@ const publishedSchedules = [
     // Edit September open days here when changes are needed.
     openDays: [2, 3, 4, 5, 7, 8, 9, 15, 16, 17, 21, 23, 25, 27, 29, 30],
   },
+  {
+    year: 2026,
+    month: 10,
+    monthName: "\u795e\u7121\u6708",
+    openHours: "OPEN\u6642\u9593 08:00-20:00\uff08\u6c34\u306e\u307f 08:00-18:00\uff09",
+    // Edit October open days here when changes are needed.
+    openDays: [1, 2, 5, 6, 7, 9, 11, 12, 13, 14, 15, 21, 22, 24, 26, 28, 29, 30, 31],
+  },
 ];
 
 const monthNames = [
