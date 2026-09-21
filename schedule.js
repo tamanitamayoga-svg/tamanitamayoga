@@ -143,6 +143,9 @@ window.TAMANITAMA_SCHEDULE = schedules[0];
       .calendar-grid span {
         min-width: 0;
       }
+      .calendar-grid .blue-date {
+        color: #4f78a8;
+      }
       .calendar-status {
         margin: -6px 0 22px;
         color: #bd2d2d;
@@ -209,6 +212,7 @@ window.TAMANITAMA_SCHEDULE = schedules[0];
       const classes = [];
       if (openDays.has(day)) classes.push("open");
       if (weekday === 0) classes.push("sun");
+      if (month === 10 && (day === 11 || day === 12)) classes.push("blue-date");
       if (classes.length) el.className = classes.join(" ");
       el.textContent = day;
       grid.appendChild(el);
