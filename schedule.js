@@ -35,9 +35,9 @@ const publishedSchedules = [
     year: 2026,
     month: 10,
     monthName: "\u795e\u7121\u6708",
-    openHours: "OPEN\u6642\u9593 08:00-20:00\uff08\u6c34\u306e\u307f 08:00-18:00\uff09",
+    openHours: "OPEN\u6642\u9593 08:00-20:00\uff08\u6c34\u306e\u307f 13:00-18:00\uff09",
     // Edit October open days here when changes are needed.
-    openDays: [1, 2, 5, 6, 7, 9, 11, 12, 13, 14, 15, 21, 22, 24, 26, 28, 29, 30, 31],
+    openDays: [1, 2, 5, 6, 7, 9, 11, 12, 13, 14, 15, 21, 23, 24, 26, 28, 29, 30, 31],
   },
 ];
 
@@ -182,7 +182,7 @@ window.TAMANITAMA_SCHEDULE = schedules[0];
     const hours = document.getElementById("calendar-hours");
 
     if (title) title.textContent = "OPEN\u65e5";
-    if (hours) hours.textContent = "OPEN\u6642\u9593 08:00-20:00\uff08\u6c34\u306e\u307f 08:00-18:00\uff09";
+    if (hours) hours.textContent = schedules[0]?.openHours || "";
   }
 
   function renderCalendar(grid, schedule) {
