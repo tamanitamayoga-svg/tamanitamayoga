@@ -39,6 +39,13 @@ const publishedSchedules = [
     // Edit October open days here when changes are needed.
     openDays: [1, 2, 5, 6, 7, 9, 11, 12, 13, 14, 15, 21, 23, 24, 26, 28, 29, 30, 31],
   },
+  {
+    year: 2026,
+    month: 11,
+    monthName: "\u971c\u6708",
+    openHours: "OPEN\u6642\u9593 08:00-20:00\uff08\u6c34\u306e\u307f 13:00-18:00\uff09",
+    openDays: [2, 3, 4, 11, 15, 16, 17, 18, 23, 25, 26, 28, 30],
+  },
 ];
 
 const monthNames = [
@@ -213,7 +220,7 @@ window.TAMANITAMA_SCHEDULE = schedules[0];
       if (openDays.has(day)) classes.push("open");
       if (weekday === 0) classes.push("sun");
       if ((year > 2026 || (year === 2026 && month >= 10)) && weekday === 6) classes.push("holiday");
-      if (month === 10 && (day === 11 || day === 12)) classes.push("holiday");
+      if (year === 2026 && ((month === 10 && day === 12) || (month === 11 && (day === 3 || day === 23)))) classes.push("holiday");
       if (classes.length) el.className = classes.join(" ");
       el.textContent = day;
       grid.appendChild(el);
