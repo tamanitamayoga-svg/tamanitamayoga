@@ -44,7 +44,7 @@ const publishedSchedules = [
     month: 11,
     monthName: "\u971c\u6708",
     openHours: "OPEN\u6642\u9593 08:00-20:00\uff08\u6c34\u306e\u307f 13:00-18:00\uff09",
-    openDays: [2, 3, 4, 11, 15, 16, 17, 18, 23, 25, 26, 28, 30],
+    openDays: [2, 3, 4, 7, 11, 15, 16, 17, 18, 23, 25, 26, 28, 30],
   },
 ];
 
